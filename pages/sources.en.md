@@ -125,7 +125,7 @@ As for the "Intermediate Link" filter, if this is used, the HTML Source works as
 
 ## Notes for Various Other Sources
 
-- HTML: Note that the HTML source includes default request headers that should be appropriate for most sites. In some cases (for example [SourceForge](https://sourceforge.net/), you may need to delete them (and possibly specify your own). 
+- HTML: Note that the HTML source includes default request headers that should be appropriate for most sites. In some cases (for example [SourceForge](https://sourceforge.net/)), you may need to delete them (and possibly specify your own). 
 - Codeberg: This source is almost identical to GitHub in its additional options.
 - F-Droid: Any app from F-Droid is likely to be [signed](https://developer.android.com/studio/publish/app-signing) with a different key than releases of the same app from other sources. This means that trying to update from an F-Droid release of a given app to a release from another source (for example GitHub) is likely to fail.
 - Tencent App Store: APKs from this source may be of pure 32-bit ([armeabi-v7a](https://developer.android.com/ndk/guides/abis#v7a)) architecture and cannot be installed on some devices using newer Arm architecture SoCs.
