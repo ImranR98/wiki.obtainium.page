@@ -151,5 +151,4 @@ plugins:
 extra_css:
   - stylesheets/custom.css
 
-extra_javascript:
-  - assets/analytics.js
+
