@@ -3,7 +3,7 @@
 Help page for Obtainium
 
 
-Accessible at [https://wiki.obtainium.imranr.dev/](https://wiki.obtainium.imranr.dev/)
+Accessible at [https://wiki.obtainium.page/](https://wiki.obtainium.page/)
 
 ---
 
