@@ -4,11 +4,13 @@ title: Hauptseite
 
 # ![Obtainium Icon](https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/icon_small.png) Obtainium Wiki
 
+[![Ceasefire Now](https://badge.techforpalestine.org/default)](https://techforpalestine.org/learn-more)
+
 … Android-App-Updates direkt von der Quelle erhalten
 
 Das Hauptziel von Obtainium ist es, den Prozess des Herunterladens und Installierens von Android-App-Updates direkt von ihren „Quell“-Websites (Websites, auf denen App-Dateien zum direkten Download verfügbar sind) zu automatisieren. Dieser Prozess muss automatisiert werden, da die Benutzer möglicherweise nicht bereit oder in der Lage sind, sich auf einen App-Store zu verlassen, um eine bestimmte App zu aktualisieren, aber Android-Apps (im Gegensatz zu PC-Apps) in der Regel davon ausgehen, dass sie extern durch einen App-Store aktualisiert werden, und verfügen daher nicht über eine eingebaute Selbstaktualisierungsfunktion.
 
-Dieses Konzept ist zwar einfach, aber die große Vielfalt an unterstützten Quellen, Benutzereinstellungen und APK-Benennungs-, Versions- und Verteilungsmethoden machen die Dinge komplizierter. Dieses Wiki erklärt die verschiedenen in Obtainium verfügbaren App-Quellen und Einstellungen. Es ist nicht vollständig und möglicherweise nicht auf dem neuesten Stand.
+Dieses Konzept ist zwar einfach, aber die große Vielfalt an unterstützten Quellen, Benutzereinstellungen und APK-Benennungs-, Versions- und Verteilungsmethoden machen die Dinge komplizierter. Dieses Wiki erklärt die verschiedenen in Obtainium verfügbaren App-Quellen und Einstellungen.
 
 
 ## App-Konfigurationen finden
@@ -32,8 +34,12 @@ Von der Gemeinschaft erstellte App-Konfigurationen finden Sie unter [apps.obtain
 !!! info "Infos zur Verifizierung"
     - Package ID: `dev.imranr.obtainium`
     - SHA-256 Hash des Signing Zertifikats: `B3:53:60:1F:6A:1D:5F:D6:60:3A:E2:F5:0B:E8:0C:F3:01:36:7B:86:B6:AB:8B:1F:66:24:3D:A9:6C:D5:73:62`
-        - Hinweis: Die obige Signatur ist auch für die F-Droid-Variante von Obtainium gültig, dank [reproduzierbarer Builds](https://f-droid.org/docs/Reproducible_Builds/).
+        - Hinweis: Die obige Signatur ist auch für die F-Droid-Variante von Obtainium gültig, dank [reproduzierbarer Builds](https://f-droid.org/docs/Reproducible_Builds/). Das bedeutet, dass das F-Droid APK bitgenau mit dem aus demselben Quellcode erstellten APK übereinstimmt, was eine unabhängige Überprüfung durch einen Dritten ermöglicht, dem Sie möglicherweise mehr vertrauen als dem Entwickler.
     - [PGP Public Key](https://keyserver.ubuntu.com/pks/lookup?search=contact%40imranr.dev&fingerprint=on&op=index) (um APK-Hashes zu überprüfen)
+
+## In-App-Links
+
+Sie finden einen Link zu diesem Wiki sowie Links zum Quellcode und zu von der Gemeinschaft erstellten App-Konfigurationen in der Fußzeile der Einstellungsseite in Obtainium.
 
 ## Limitierungen
 - Bei einigen Quellen werden die Daten mit Hilfe von Web Scraping gesammelt und die Konfigurationen können aufgrund von Änderungen am Design der Website leicht beschädigt werden. In solchen Fällen sind zuverlässigere Methoden nicht verfügbar.

@@ -11,9 +11,13 @@ The tab bar at the bottom of the screen is the main way to navigate around Obtai
 
 This is the main screen; it contains a list of apps being tracked by Obtainium, and provides the basic info for each app.
 
-On this page, you can use the buttons at the bottom of the screen to perform various operations (like delete, update, tag, etc.) on multiple apps at once. You can do this after selecting one or more apps, either using a long-press to enter multi-select mode or using the "select all" button.
+On this page, you can use the buttons at the bottom of the screen to perform various operations on multiple apps at once. You can do this after selecting one or more apps, either using a long-press to enter multi-select mode or using the "select all" button. Available batch operations include updating, installing, deleting, categorising, pinning/unpinning, sharing app URLs or export links, and marking selected apps as updated.
 
-You can also filter for specific apps by pressing the filter button. This lets you view only the apps that fulfill specific criteria (like installed/not-installed, latest/outdated, source site, etc.).
+Apps can be assigned to categories, which are shown as coloured bars on the left edge of each app entry. When "Group by Category" is enabled in Settings, the app list is divided into expandable sections by category.
+
+In the detail view for an individual app, you can view the app's version info, release date, changelog, and APK signing certificate hashes (long-press to copy). If a repository rename is detected, a prominent notice will appear with the option to update the app's URL automatically.
+
+You can also filter for specific apps by pressing the filter button. This lets you view only the apps that fulfill specific criteria (like installed/not-installed, latest/outdated, source site, category, etc.).
 
 ## Add App Page
 
@@ -33,12 +37,23 @@ Finally, this page lists all supported sources, along with additional info such 
 
 ## Import/Export Page
 
-This page lets you export your Obtainium data so that it can be imported later. You can also enable automatic exports that happen whenever any data changes.
+This page lets you export your Obtainium data so that it can be imported later. You can also enable automatic exports that happen whenever any data changes, and control whether secrets (such as API tokens) are included in the export.
 
-This page also provides various other ways of importing large numbers of apps, including through search.
+This page also provides various other ways of importing large numbers of apps:
+
+- **Search**: Search across supported sources and import results in bulk.
+- **URL list import**: Paste or load a file containing a list of app URLs to import them all at once.
+- **Mass source imports**: Import apps from bulk sources like a GitHub user's starred repositories.
 
 The search tool on this page also lets you search sources that require you to specify the source host/domain, such as [third-party F-Droid repos](sources.md/#f-droid-third-party-repo).
 
 ## Settings Page
 
-This page provides various UI and behaviour settings, including the option to enable more functionality for specific sources by adding required credentials.
+This page provides various UI and behaviour settings, organised into sections:
+
+- **Updates**: Background update interval, foreground service mode, Wi-Fi/charging constraints, check on start, parallel downloads, Shizuku integration for elevated silent installs (with an option to pretend to be Google Play), and AppVerifier integration for verifying APKs before installation.
+- **Source Specific**: Credentials for specific sources (e.g. GitHub/GitLab personal access tokens) and other source-specific configuration settings.
+- **Appearance**: Theme (system/light/dark), black/dark mode, Material You dynamic colours, custom accent colour, sort order, language override, system font, in-app WebView, category grouping, and page transition settings.
+- **Categories**: Create, rename, and delete categories for organising your apps.
+
+The footer of the Settings page also provides links to the source code, this wiki, crowdsourced app configurations, and the app's logs for troubleshooting.

@@ -51,7 +51,7 @@ When Obtainium is tracking an app that is currently installed, it grabs the vers
 
 Obtainium stores a list of "standard" formats which it uses to make this comparison (like `x.y.z` or `x.y`). If both versions being compared conform to the same format, the comparison will be made. If not, version detection will be disabled for that app. In some cases, Obtainium will strip off extra parts from the source string if doing so would result in a standard version (like how `v` and `-beta` are removed from Obtainium's `v0.14.21-beta`), then it can make the comparison. We never try to strip parts off the "real" OS-provided version.
 
-[This piece of code](https://github.com/ImranR98/Obtainium/blob/main/lib/providers/apps_provider.dart#L64) defines how the various "standard" formats are generated.
+[This piece of code](https://github.com/ImranR98/Obtainium/blob/main/lib/providers/apps_provider.dart#L96) defines how the various "standard" formats are generated.
 
 It's always possible to expand that code to add support for more formats, but this requires careful consideration. For example if Android reports that an installed app's version is `1.2` but the source says the latest available version of that app is `1.2-4`, should we strip off the `-4` and say the two are the same (meaning there is no update available)? This may be fine in some contexts (where the `-4` is not actually indicative of a change in the app itself) but not in other contexts. So it wouldn't be a good idea to support that specific case.
 
@@ -62,11 +62,30 @@ Version detection being turned off should not usually have a significant impact 
 
 In such cases, Obtainium would not be able to detect that the app's real OS version has changed and so it would not update its internal records accordingly - you would need to manually correct the inconsistency.
 
+Two additional per-app options can affect how versions are handled:
+
+- **Use Version Code as OS Version**: When enabled, Obtainium will use the Android version code (a number) instead of the version name string when comparing against the source. This can resolve mismatches when the source provides version codes but the OS reports version names, or vice versa.
+- **Release Date as Version**: Available for many sources, this toggle treats the release date as a pseudo-version instead of the version string from the source. This is useful when the source does not provide meaningful version information but the release date is reliable.
+
 See also: [Obtainium Issue #946 Comment](https://github.com/ImranR98/Obtainium/issues/946#issuecomment-1741745587)
 
 ## Background Updates
 
 Obtainium checks for app updates in the background on a regular basis. You can control the frequency of these update tasks on the settings page.
+
+Background update checking can run through one of two mechanisms:
+
+- **WorkManager** (default): Uses Android's standard background task scheduler. This is battery-efficient but may be delayed by some OEMs' battery optimisation policies.
+- **Foreground Service** (optional): Runs as a persistent foreground service with a notification. This can be more reliable on devices that aggressively restrict background work, at the cost of a persistent notification. Requires Android 11+.
+
+You can restrict when background checks occur:
+
+- **Wi-Fi only**: Only check for updates when connected to a Wi-Fi network.
+- **While charging only**: Only check for updates when the device is charging.
+
+You can also choose to check for updates every time the app is opened ("Check on start"), and/or every time you view an app's detail page.
+
+### Silent Installation
 
 After a background update checking task is completed, any available updates are divided into 2 categories:
 
@@ -82,5 +101,7 @@ For an update to be automatically installed in the background (AKA a silent upda
 - If there are multiple APKs available for the update, the additional options for that app must be configured such that Obtainium can filter these down to one APK
 
 Each available update is downloaded and installed if possible, and the user is then notified either of the update's availability or that it was installed in the background.
+
+By default, Obtainium downloads and installs updates one at a time. Enabling parallel downloads will process multiple updates simultaneously, which can speed up bulk updates but may use more network bandwidth and system resources.
 
 Note that due to technical limitations, background updates can only be installed on an asynchronous, best-effort basis. So if a background update fails to install, you will not be notified of the error.

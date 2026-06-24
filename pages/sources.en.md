@@ -24,7 +24,7 @@ Aside from those, each app has additional source-specific options. Most of those
 - Open Source - General:
     - [GitHub](https://github.com/)
     - [GitLab](https://gitlab.com/)
-    - [Forgejo](https://forgejo.org/) ([Codeberg](https://codeberg.org/))
+    - [Codeberg](https://codeberg.org/) (Forgejo)
     - [F-Droid](https://f-droid.org/)
     - Third Party F-Droid Repos
     - [IzzyOnDroid](https://android.izzysoft.de/)
@@ -33,11 +33,18 @@ Aside from those, each app has additional source-specific options. Most of those
     - [APKPure](https://apkpure.net/)
     - [Aptoide](https://aptoide.com/)
     - [Uptodown](https://uptodown.com/)
+    - [itch.io](https://itch.io/)
     - [Huawei AppGallery](https://appgallery.huawei.com/)
     - [Tencent App Store](https://sj.qq.com/)
+    - [Vivo App Store](https://h5appstore.vivo.com.cn/)
+    - [RuStore](https://rustore.ru/)
+    - [Apk4Free](https://apk4free.net/)
+    - [CoolAPK](https://www.coolapk.com/)
+    - [Farsroid](https://farsroid.com/)
+    - [LiteAPKs](https://liteapks.com/)
     - Jenkins Jobs
     - [APKMirror](https://apkmirror.com/) (Track-Only)
-    - [RuStore](https://rustore.ru/)
+    - [RockMods](https://rockmods.net/) (Track-Only)
 - App-Specific:
     - [Telegram App](https://telegram.org)
     - [Neutron Code](https://neutroncode.com)
@@ -49,6 +56,17 @@ Aside from those, each app has additional source-specific options. Most of those
 GitHub puts a cap on the number of API requests you can make in a given period of time. Since Obtainium uses the GitHub API to grab release info, you may run into a "rate limit" error if you have more than a few dozen GitHub apps. You can get around this by getting a Personal Access Token.
 
 GitHub also allows developers to host multiple releases of their app. This usually means older versions of the same app, but may also include pre-releases, variants, etc. - so Obtainium provides various filters that let you navigate this and grab the exact releases you are interested in.
+
+Some additional options have less obvious behaviour:
+
+- **Verify Latest Tag**: When enabled, Obtainium will pick the release that the developer has marked as "latest" rather than the one that is chronologically the most recent. The two are usually the same but may differ in some cases. This comes at the cost of making an extra API call to GitHub (leading to rate limits more quickly).
+- **Sort Method**: Controls how releases are sorted when multiple are available. By default, releases are sorted by date, but "smart name" sorting attempts to infer version order from release titles, and "name" sorting uses strict alphanumeric ordering. The "smart name with date fallback" option uses name-based sorting but falls back to date-based sorting when names cannot be compared.
+- **Use Latest Asset Date as Release Date**: When enabled, the release date shown will reflect the date of the most recently uploaded asset within a release rather than the release's own publication date.
+- **Check for Repo Rename**: If enabled, Obtainium will detect when a repository has been renamed and prompt you to update the app's URL accordingly.
+
+You can also provide a **GitHub Proxy Prefix** (e.g. `gh-proxy.com`) in the source-specific settings. When set, all GitHub API requests will be routed through that proxy, which can help with rate limiting or accessibility issues in some regions.
+
+The GitHub source supports **search** and lets you filter results by a minimum star count.
 
 ### Creating a GitHub Personal Access Token
 
@@ -93,9 +111,14 @@ Just like GitHub, GitLab also allows developers to host older releases of the sa
 
 ## F-Droid Third Party Repo
 
-Unlike with most other sources, F-Droid repos contain info about multiple apps all under the same URL. This means that, in addition to the repo URL, you must provide the name or ID of the app you want separately. If you're not sure what apps are available in a given repo, you can use the "Search Source" button on the [Import/Export page](ui_overview.md/#importexport-page) to find out.
+Unlike with most other sources, F-Droid repos contain info about multiple apps all under the same URL. This means that, in addition to the repo URL, you must provide the name or ID of the app you want separately in the "App ID or Name" field. If you're not sure what apps are available in a given repo, you can use the "Search Source" button on the [Import/Export page](ui_overview.md/#importexport-page) to find out.
 
 Note that Obtainium cannot automatically tell that a given URL points to a third-party F-Droid repo. This means that by default, adding a third-party F-Droid repo to Obtainium will result in the incorrect use of the [HTML source](#html) (a fallback source Obtainium uses for any URL it does not recognize). You must manually select "F-Droid Third Party Repo" from the "Override Source" dropdown to get around this.
+
+The additional version selection options have distinct behaviour:
+
+- **Try Selecting Suggested Version Code**: Obtainium will attempt to use the version code that the F-Droid repo has marked as the suggested/current version. This is the default and works well for most repos.
+- **Auto-Select Highest Version Code**: Instead of the suggested version, Obtainium will select the release with the highest version code number from the repo. This can be useful if the repo does not properly mark a suggested version, or if you want to ensure you always get the numerically highest version available.
 
 ## APKMirror
 
@@ -112,22 +135,35 @@ The HTML Source works in this way:
 3. It sorts the remaining links. This sorting is alphanumeric sorting on the whole link, but you can choose to sort by only the last segment of the link. This last segment is usually the filename but may not be if you used your own filter in step 2.
 4. It applies yet another optional user-defined filter on all remaining links. The difference between this filter and the one from step 2 is that this one is a more general filter that all Sources have - it is inherited from the parent `AppSource` class (the APK filter option described in [App Sources](#app-sources)). It's probably easier to use this in some situations rather than having a single more complicated regular expression in step 2 (see [this comment](https://github.com/ImranR98/Obtainium/issues/954#issuecomment-1745977857) for an example). It is also useful when used in combination with the intermediate link option.
 5. Of the remaining links, it picks the first one (or the last one if you enabled the reverse option).
-6. Now that we have the final APK link, we need a unique release ID to go with it so that when the ID changes, we know the app has an update available. For other Sources, the unique release ID is the app version, but for the HTML Source, it might not be possible to extract a version string. So by default, this is just a hash of the link.
-    - However, links often have version strings embedded within them. Obtainium can't know how to extract these on its own (different websites would have different ways of doing it), so the user can choose to specify a regular expression that can be applied to the link in order to extract the version  - this is what the "Version Extraction" field is for.
+6. Now that we have the final APK link, we need a unique release ID to go with it so that when the ID changes, we know the app has an update available. For other Sources, the unique release ID is the app version, but for the HTML Source, it might not be possible to extract a version string. By default, this is just a hash of the link. There are three pseudo-versioning methods available:
+    - **Partial APK Hash** (default): A hash of a portion of the APK file itself. This is more reliable than the URL hash because it depends on the file content, not the URL, but requires downloading part of the APK to compute.
+    - **APK Link Hash**: A hash of the APK download URL. This changes whenever the URL changes.
+    - **ETag**: Uses the HTTP ETag header from the APK download response. This can be useful when the server provides stable ETags but the download URL itself does not change between versions.
+    - Additionally, links often have version strings embedded within them. Obtainium can't know how to extract these on its own (different websites would have different ways of doing it), so the user can choose to specify a regular expression that can be applied to the link in order to extract the version - this is what the "Version Extraction" field is for.
     - But often it can be difficult to come up with a regular expression that accurately matches the version while excluding extra characters. For this, we have the "Match Group" option that lets the user specify which group in the regular expression we should use as a version.
+    - There is also a "Version Extract Whole Page" toggle. When enabled, Obtainium will attempt to find a version string anywhere on the HTML page rather than just in the link URL. This is useful when the version is displayed on the page but not embedded in the download link.
     - The version extraction feature isn't really necessary - using link hashes is easier and more reliable. Some users might just want it since having the real version looks nicer/more accurate and it allows Obtainium, in most cases, to use [version detection](app_tracking.md/#version-detection).
 
-As for the "Intermediate Link" filter, if this is used, the HTML Source works as follows (see [issue #820](https://github.com/ImranR98/Obtainium/issues/820) for a situation where this is useful):
+You can also set **custom request headers** for the HTML source. This allows you to override the default headers (e.g. User-Agent) when the target website requires specific headers to serve the APK correctly.
 
-1. It looks for links on an HTML page.
+As for the **Intermediate Link** filter, if this is used (see [issue #820](https://github.com/ImranR98/Obtainium/issues/820) for a situation where this is useful), the HTML source adds a preliminary step before the normal process:
+
+1. It looks for links on an initial HTML page.
 2. It filters out any links that don't match the intermediate link filter.
-3. It grabs the first remaining link (no reverse option here), and then feeds that link as the input for the normal HTML Source process described previously.
+3. It grabs the first remaining link and then feeds that link as the input for the normal HTML Source process described above.
+
+The intermediate link step has its own sub-options for controlling how links are filtered and sorted:
+
+- **Auto Filter by Architecture**: Automatically filters intermediate links by CPU architecture if detectable from the link text.
+- **Filter by Link Text**: When enabled, the intermediate link filter regex is applied to the visible link text rather than the URL itself.
+- **Match Links Outside `<a>` Tags**: Also matches links that appear outside of standard anchor tags (e.g. in JavaScript data structures embedded in the page).
+- **Skip Sorting / Reverse Sort / Sort by Last Link Segment**: These control how intermediate links are ordered before picking the first one.
 
 ## Notes for Various Other Sources
 
-- HTML: Note that the HTML source includes default request headers that should be appropriate for most sites. In some cases (for example [SourceForge](https://sourceforge.net/)), you may need to delete them (and possibly specify your own). 
-- Codeberg: This source is almost identical to GitHub in its additional options.
+- HTML: The HTML source includes default request headers that should be appropriate for most sites. In some cases (for example [SourceForge](https://sourceforge.net/)), you may need to delete them (and possibly specify your own).
+- Codeberg: This source is almost identical to GitHub in its additional options and also supports search.
 - F-Droid: Any app from F-Droid is likely to be [signed](https://developer.android.com/studio/publish/app-signing) with a different key than releases of the same app from other sources. This means that trying to update from an F-Droid release of a given app to a release from another source (for example GitHub) is likely to fail.
 - Tencent App Store: APKs from this source may be of pure 32-bit ([armeabi-v7a](https://developer.android.com/ndk/guides/abis#v7a)) architecture and cannot be installed on some devices using newer Arm architecture SoCs.
-- Any Source that does not have a specific host associated with it (like [third-party F-Droid repos](#f-droid-third-party-repo), Jenkins instances, and SourceHut instances) will not be automatically recognized by Obtainium. You must manually pick the right source from the "Override Source" dropdown.
+- Any source that does not have a specific host associated with it (like [third-party F-Droid repos](#f-droid-third-party-repo), Jenkins instances, and SourceHut instances) will not be automatically recognized by Obtainium. You must manually pick the right source from the "Override Source" dropdown.
 - Some sources (like APKPure) may provide [XAPK files](https://apkpure.com/xapk.html) instead of APK files. Obtainium's XAPK support is incomplete and may not work reliably.

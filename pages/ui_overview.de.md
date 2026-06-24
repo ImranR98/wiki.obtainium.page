@@ -1,6 +1,6 @@
 ---
 title: Übersicht User Interface
-description: Übersicht User Interface (UI) von Otainium
+description: Übersicht User Interface (UI) von Obtainium
 ---
 
 # UI-Übersicht
@@ -11,9 +11,13 @@ Die Registerkartenleiste am unteren Rand des Bildschirms ist das Hauptinstrument
 
 Dies ist der Hauptbildschirm; er enthält eine Liste der Apps, die von Obtainium überwacht werden, und liefert die grundlegenden Informationen zu jeder App.
 
-Auf dieser Seite können Sie mit den Schaltflächen am unteren Rand des Bildschirms verschiedene Vorgänge (wie Löschen, Aktualisieren, Markieren usw.) für mehrere Apps auf einmal durchführen. Dies kann nach Auswahl einer oder mehrerer Apps erfolgen, entweder durch langes Drücken, oder über die Schaltfläche „Alle auswählen“, um in den Mehrfachauswahlmodus zu gelangen.
+Auf dieser Seite können Sie mit den Schaltflächen am unteren Rand des Bildschirms verschiedene Vorgänge für mehrere Apps auf einmal durchführen. Dies kann nach Auswahl einer oder mehrerer Apps erfolgen, entweder durch langes Drücken, oder über die Schaltfläche „Alle auswählen“, um in den Mehrfachauswahlmodus zu gelangen. Zu den verfügbaren Batch-Vorgängen gehören Aktualisieren, Installieren, Löschen, Kategorisieren, Anheften/Lösen, Teilen von App-URLs oder Exportlinks und Markieren ausgewählter Apps als aktualisiert.
 
-Sie können auch Apps suchen und nach bestimmten Apps filtern, indem Sie auf die Schaltfläche 🔍 klicken. Auf diese Weise können Sie nur die Apps anzeigen, die bestimmte Kriterien erfüllen (z. B. installiert/nicht installiert, aktuell/veraltet, Quellseite usw.).
+Apps können Kategorien zugewiesen werden, die als farbige Balken am linken Rand jedes App-Eintrags angezeigt werden. Wenn „Nach Kategorie gruppieren“ in den Einstellungen aktiviert ist, wird die App-Liste in erweiterbare Abschnitte unterteilt.
+
+In der Detailansicht einer einzelnen App können Sie die Versionsinformationen, das Veröffentlichungsdatum, das Änderungsprotokoll und die APK-Signaturzertifikats-Hashes der App einsehen (lang drücken zum Kopieren). Wenn eine Umbenennung des Repositorys erkannt wird, erscheint ein Hinweis mit der Option, die URL der App automatisch zu aktualisieren.
+
+Sie können auch Apps suchen und nach bestimmten Apps filtern, indem Sie auf die Schaltfläche 🔍 klicken. Auf diese Weise können Sie nur die Apps anzeigen, die bestimmte Kriterien erfüllen (z. B. installiert/nicht installiert, aktuell/veraltet, Quellseite, Kategorie usw.).
 
 ## „App hinzufügen“-Registerkarte
 
@@ -33,12 +37,23 @@ Schließlich werden auf dieser Seite alle unterstützten Quellen aufgelistet, zu
 
 ## „Import/Export“-Registerkarte
 
-Auf dieser Seite können Sie Ihre Obtainium-Daten exportieren, damit sie später importiert werden können. Sie können auch automatische Exporte aktivieren, die immer dann erfolgen, wenn sich Daten ändern.
+Auf dieser Seite können Sie Ihre Obtainium-Daten exportieren, damit sie später importiert werden können. Sie können auch automatische Exporte aktivieren, die immer dann erfolgen, wenn sich Daten ändern, und festlegen, ob Geheimnisse (wie API-Token) in den Export einbezogen werden sollen.
 
-Auf dieser Seite finden Sie auch verschiedene andere Möglichkeiten, eine große Anzahl von Anwendungen zu importieren, unter anderem über die Suche.
+Auf dieser Seite finden Sie auch verschiedene andere Möglichkeiten, eine große Anzahl von Anwendungen zu importieren:
+
+- **Suche**: Durchsuchen Sie unterstützte Quellen und importieren Sie Ergebnisse in großen Mengen.
+- **URL-Listen-Import**: Fügen Sie eine Liste von App-URLs ein oder laden Sie eine Datei, um sie alle auf einmal zu importieren.
+- **Massenquellen-Importe**: Importieren Sie Apps aus Bulk-Quellen wie den GitHub-Sterne-Repositories eines Benutzers.
 
 Auch mit dem Suchwerkzeug auf dieser Seite können Sie Quellen durchsuchen, bei denen Sie den Quellhost/die Quelldomäne angeben müssen, z.B. [F-Droid-Repos von Drittanbietern](sources.de.md/#f-droid-third-party-repo).
 
 ## „Einstellungen“-Registerkarte
 
-Diese Seite bietet verschiedene Einstellungen für die Benutzeroberfläche und das Verhalten, einschließlich der Möglichkeit, mehr Funktionen für bestimmte Quellen zu aktivieren, indem die erforderlichen Anmeldedaten hinzugefügt werden.
+Diese Seite bietet verschiedene Einstellungen für die Benutzeroberfläche und das Verhalten, organisiert in Abschnitten:
+
+- **Updates**: Hintergrundaktualisierungsintervall, Vordergrunddienstmodus, WLAN-/Ladeeinschränkungen, Überprüfung beim Start, parallele Downloads, Shizuku-Integration für automatische Installationen (mit der Option, sich als Google Play auszugeben) und AppVerifier-Integration zur Überprüfung von APKs vor der Installation.
+- **Quellspezifisch**: Anmeldedaten für bestimmte Quellen (z. B. GitHub/GitLab persönliche Zugriffstoken) und andere quellspezifische Konfigurationseinstellungen.
+- **Erscheinungsbild**: Design (System/Hell/Dunkel), schwarzes Design, Material You dynamische Farben, benutzerdefinierte Akzentfarbe, Sortierreihenfolge, Sprachüberschreibung, Systemschriftart, In-App-WebView, Kategoriegruppierung und Seitenübergangseinstellungen.
+- **Kategorien**: Erstellen, umbenennen und löschen Sie Kategorien zur Organisation Ihrer Apps.
+
+Die Fußzeile der Einstellungsseite enthält auch Links zum Quellcode, zu diesem Wiki, zu von der Gemeinschaft erstellten App-Konfigurationen und zu den App-Protokollen zur Fehlerbehebung.
